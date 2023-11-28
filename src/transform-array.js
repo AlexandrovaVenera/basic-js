@@ -1,4 +1,4 @@
-const { NotImplementedError } = require("../extensions/index.js");
+const { NotImplementedError } = require('../extensions/index.js');
 
 /**
  * Create transformed array based on the control sequences that original
@@ -17,19 +17,20 @@ function transform(arr) {
   if (Array.isArray(arr)) {
     let text = [];
     arr.forEach((el, i, arr) => {
-      if (el == "--double-next") {
+      if (el == '--double-next') {
         text.push(arr[i + 1]);
-      } else if (el == "--double-prev") {
+      } else if (el == '--double-prev') {
         text.push(arr[i - 1]);
-      } else if (el == "--discard-prev") {
-        text.splice(-1);
-      } else if (el == "--discard-next" || arr[i - 1] == "--discard-next") {
+      } else if (el == '--discard-prev') {
+        text.slice(0, -1);
+      } else if (el == '--discard-next') {
+        arr[i] = '';
+        arr[i + 1] = '';
       } else {
         text.push(el);
       }
     });
-
-    return text.filter((item) => item !== "");
+    return text.filter((item) => item != '');
   } else {
     throw new Error(`'arr' parameter must be an instance of the Array!`);
   }
