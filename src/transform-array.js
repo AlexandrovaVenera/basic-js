@@ -16,21 +16,21 @@ const { NotImplementedError } = require('../extensions/index.js');
 function transform(arr) {
   if (Array.isArray(arr)) {
     let text = [];
-    arr.forEach((el, i, arr) => {
-      if (el == '--double-next') {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] == '--double-next') {
         text.push(arr[i + 1]);
-      } else if (el == '--double-prev') {
+      } else if (arr[i] == '--double-prev') {
         text.push(arr[i - 1]);
-      } else if (el == '--discard-prev') {
-        text.slice(0, -1);
-      } else if (el == '--discard-next') {
+      } else if (arr[i] == '--discard-prev') {
+        text = text.slice(0, -1);
+      } else if (arr[i] == '--discard-next') {
         arr[i] = '';
         arr[i + 1] = '';
       } else {
-        text.push(el);
+        text.push(arr[i]);
       }
-    });
-    return text.filter((item) => item != '');
+    }
+    return text.filter((el) => el != '');
   } else {
     throw new Error(`'arr' parameter must be an instance of the Array!`);
   }
